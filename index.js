@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectDB from "./models/index.js";
 import { productRouter } from "./routes/index.js";
 import { setServers } from "node:dns/promises";
 
@@ -19,8 +18,6 @@ app.use(
     ],
   }),
 );
-
-connectDB(); //DB연결
 
 app.get("/", (req, res) => {
   res.send("서버 잘 작동중!");
