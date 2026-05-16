@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model User{
+  id          Int       @id @default(autoincrement()) 
+  name        String
+  email       String    @unique
+  username    String    @unique
+  password    String
+  deletedAt   DateTime?
+  articles    Article[]
+  comments    Comment[]
+  products    Product[]
+  @@map("users")
+}
+
+model Article{
+  id          Int       @id @default(autoincrement()) 
+  title       String
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      Int
+  user        User      @relation(fields:[userId], references: [id])
+  comments    Comment[]
+  @@map("articles")
+}
+
+model Comment{
+  id          Int       @id @default(autoincrement()) 
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      Int
+  user        User      @relation(fields:[userId], references: [id])
+  articleId   Int
+  article     Article   @relation(fields:[articleId], references: [id])
+  @@map("comments")
+}
+
+model Product {
+  id              Int       @id @default(autoincrement()) 
+  name            String
+  description     String
+  price           Int       
+  favoriteCount   Int       @default(0)
+  tags            Tag[]
+  images          Image[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userId          Int
+  user            User      @relation(fields:[userId], references:[id])
+  @@map("products")
+}
+
+model Image{
+  id          Int       @id @default(autoincrement()) 
+  productId   Int
+  product     Product   @relation(fields: [productId], references: [id])
+  url         String
+  @@map("images")
+}
+
+model Tag{
+  id          Int         @id @default(autoincrement()) 
+  name        String      @unique
+  products    Product[]
+  @@map("tags")
+}
