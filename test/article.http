@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:3000/articles
+
+### POST Article 테스트
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "title": "힐러 개수",
+    "content": "힐러 개수 너무 적지 않아? 맨날 똑같은 캐릭터만 하게 됨",
+    "userId": 4
+}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "title": "오리사 궁극기 낙사",
+    "content": "일리오스 우물에서 당했는데 분하지도 않고 그냥 신기하기만 했음",
+    "userId": 3
+}
+
+### GET Article 테스트
+GET {{baseUrl}}/17
+GET {{baseUrl}}/1
+
+### GET Article List 테스트
+GET {{baseUrl}}
+GET {{baseUrl}}?orderBy=recent
+GET {{baseUrl}}?orderBy=recent&pageSize=2&page=1
+GET {{baseUrl}}?orderBy=recent&pageSize=2&page=2
+GET {{baseUrl}}?orderBy=recent&pageSize=2&page=1&keyword=힐
+
+### PATCH Article 테스트
+PATCH {{baseUrl}}/17
+Content-Type: application/json
+
+{
+    "title": "일리오스 궁극기 낙사 당함",
+    "content": "일리오스 우물에서 우리 팀 셋이서 당했는데 분하지도 않고 그냥 신기해서 전챗으로 인정 날렸음",
+    "userId": 3
+}
+
+PATCH {{baseUrl}}/17
+Content-Type: application/json
+
+{
+    "title": "일리오스 오리사 궁극기 낙사"
+}
+
+PATCH {{baseUrl}}/17
+Content-Type: application/json
+
+{
+    "content": "일리오스 우물에서 우리 팀 셋이서 당했는데 분하지도 않고 그냥 신기했음. 울팀 라인은 그냥 인정 날림",
+    "userId": 4
+}
+
+### DELETE Article 테스트
+DELETE {{baseUrl}}/8
+
+
