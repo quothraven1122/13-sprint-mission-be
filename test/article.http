@@ -57,5 +57,3 @@ Content-Type: application/json
 
 ### DELETE Article 테스트
 DELETE {{baseUrl}}/8
-
-

@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:3000/articles/1/comments
+
+### POST Comment 테스트
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content": "개수 너무 적긴 해~",
+    "userId": 3
+}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content": "아나 키리 우양 일리 브리 미즈키 6개 돌려막기",
+    "userId": 4
+}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content": "진짜 질린다....",
+    "userId": 3
+}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content": "저격수 옴닉 힐러 나왔으면 좋겠다",
+    "userId": 4
+}
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "content": "ㅇㅈ",
+    "userId": 3
+}
+
+### GET Comment 테스트
+GET {{baseUrl}}
+GET {{baseUrl}}?cursor=1
+
+### PATCH Article 테스트
+PATCH {{baseUrl}}/3
+Content-Type: application/json
+
+{
+    "content": "질리는구려......"
+}
+
+
+### DELETE Comment 테스트
+DELETE {{baseUrl}}/4
