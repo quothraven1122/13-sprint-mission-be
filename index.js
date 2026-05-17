@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { productRouter } from "./routes/index.js";
+import { articleRouter, productRouter } from "./routes/index.js";
 import { setServers } from "node:dns/promises";
 
 setServers(["1.1.1.1", "8.8.8.8"]);
@@ -22,6 +22,7 @@ app.use(
 app.get("/", (req, res) => {
   res.send("서버 잘 작동중!");
 });
+app.use("/articles", articleRouter);
 app.use("/products", productRouter);
 
 app.listen(process.env.PORT || 3000, () => {
