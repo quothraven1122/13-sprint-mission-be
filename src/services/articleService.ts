@@ -32,9 +32,9 @@ const getArticles = async ({
   totalCount: number;
   list: (ArticleReturnType & { liked: boolean })[];
 }> => {
-  if (page && Number(page) < 1)
+  if (page !== undefined && page < 1)
     throw createError(400, "page는 1 이상이어야 합니다.");
-  if (pageSize && Number(pageSize) < 1)
+  if (pageSize !== undefined && pageSize < 1)
     throw createError(400, "pageSize는 1 이상이어야 합니다.");
   if (orderBy && !VALID_ORDER_BY.includes(orderBy))
     throw createError(400, "잘못된 정렬 기준입니다.");
@@ -93,12 +93,15 @@ const likeArticle = async (
   userId: User["id"],
 ): Promise<{ liked: true; favoriteCount: number }> => {
   const existedLike = await articleRepository.findLike(articleId, userId);
+  const article = await articleRepository.findById(articleId);
+  if (!article) {
+    throw createError(404, "게시글을 찾을 수 없습니다.");
+  }
 
   if (existedLike) {
     return {
       liked: true,
-      favoriteCount: (await articleRepository.findById(articleId))
-        .favoriteCount,
+      favoriteCount: article.favoriteCount,
     };
   }
 
@@ -115,9 +118,12 @@ const unlikeArticle = async (
   userId: User["id"],
 ): Promise<{ liked: false; favoriteCount: number }> => {
   const existedLike = await articleRepository.findLike(articleId, userId);
+  const article = await articleRepository.findById(articleId);
+  if (!article) {
+    throw createError(404, "게시글을 찾을 수 없습니다.");
+  }
 
   if (!existedLike) {
-    const article = await articleRepository.findById(articleId);
     return {
       liked: false,
       favoriteCount: article.favoriteCount,

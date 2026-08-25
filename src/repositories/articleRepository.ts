@@ -98,7 +98,7 @@ async function countByKeyword(keyword?: string): Promise<number> {
 async function findById(
   articleId: Article["id"],
   userId?: User["id"],
-): Promise<ArticleReturnType & { liked: boolean }> {
+): Promise<(ArticleReturnType & { liked: boolean }) | null> {
   const article = await prisma.article.findUnique({
     where: { id: Number(articleId) },
     include: {
